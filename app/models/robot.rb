@@ -3,5 +3,6 @@ class Robot < ApplicationRecord
   scope :has_colour, -> { where(colour: 'blue') }
   scope :has_track_wheels, -> { where.not(has_wheels: true, has_tracks: true) }
   scope :has_sentience_status, -> { where(has_sentience: true, statuses: 'loose screws') }
-  scope :has_onfire, -> { where(statuses: 'on fire') }
+  scope :is_onfire, -> { where(statuses: 'on fire') }
+  scope :is_rusty, -> { where("statuses = ? OR statuses = ?", 'loose screws', 'paint scratched') }
 end
