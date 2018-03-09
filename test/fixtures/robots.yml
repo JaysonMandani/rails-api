@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  has_sentience: false
+  has_wheels: false
+  has_tracks: false
+  number_of_rotors: 1
+  colour: MyString
+  statuses: MyString
+
+two:
+  name: MyString
+  has_sentience: false
+  has_wheels: false
+  has_tracks: false
+  number_of_rotors: 1
+  colour: MyString
+  statuses: MyString
