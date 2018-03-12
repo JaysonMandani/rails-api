@@ -14,8 +14,8 @@ class RobotsController < ApplicationController
 
   def recycle
     @recycle     = Robot.recycle_robots
-    @not_passed  = Robot.where.not(status: [nil, ""], shipped: true)
-    @passed      = Robot.where(status: [nil, ""], shipped: false)
+    @not_passed  = Robot.not_passed
+    @passed      = Robot.passed
 
     render json: {recycleRobots: @recycle, passed: @passed, not_passed: @not_passed}
   end
