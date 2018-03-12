@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309134347) do
+ActiveRecord::Schema.define(version: 20180312084009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,13 +22,14 @@ ActiveRecord::Schema.define(version: 20180309134347) do
     t.boolean "has_tracks"
     t.integer "number_of_rotors"
     t.string "colour"
-    t.string "statuses"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "shipped", default: false
   end
 
   create_table "shipments", force: :cascade do |t|
-    t.jsonb "shipping", default: "{}", null: false
+    t.jsonb "robot_ids", default: "{}", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
