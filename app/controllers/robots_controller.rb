@@ -17,6 +17,6 @@ class RobotsController < ApplicationController
     @not_passed  = Robot.recycle_robots
     @passed      = Robot.passed
 
-    render json: {recycleRobots: @recycle, passed: @passed, not_passed: @recycle_robots}
+    render json: {recycleRobots: @recycle, passed: @passed, not_passed: @not_passed}
   end
 end
