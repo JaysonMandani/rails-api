@@ -13,10 +13,10 @@ class RobotsController < ApplicationController
   end
 
   def recycle
-    @recycle     = Robot.recycle_robots
-    @not_passed  = Robot.not_passed
+    @recycle     = Robot.recycle_robots.map(&:id)
+    @not_passed  = Robot.recycle_robots
     @passed      = Robot.passed
 
-    render json: {recycleRobots: @recycle, passed: @passed, not_passed: @not_passed}
+    render json: {recycleRobots: @recycle, passed: @passed, not_passed: @recycle_robots}
   end
 end
