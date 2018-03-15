@@ -5,7 +5,8 @@ class Robot < ApplicationRecord
   scope :has_sentience_status, -> { where(has_sentience: true, status: 'loose screws') }
   scope :is_onfire,            -> { where(status: 'on fire') }
   scope :is_rusty,             -> { where("status = ? OR status = ?", 'loose screws', 'paint scratched') }
-  scope :passed,               -> { where(status: [nil, ""], shipped: false) }
+  scope :passed,               -> { where(status: [nil, ""], shipped: false, ship_ready: false) }
+  scope :ship_ready,           -> { where(status: [nil, ""], shipped: false, ship_ready: true) }
 
   def self.recycle_robots
     robot_ids = []

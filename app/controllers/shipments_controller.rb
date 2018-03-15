@@ -1,17 +1,18 @@
 class ShipmentsController < ApplicationController
   def create
-    @shipment = Shipment.create(shipment_params)
+    @robots = Robot.where(ship_ready: true, shipped: false)
+    @shipment = Shipment.create(robot_ids: @robots.ids)
+
     if @shipment.present?
-      @shipment.update_shipped(shipment_params.robot_ids)
-      render json: "Successfully created", status: :created
+      @shipment.update_shipped(@robots.ids)
+      @recycle     = Robot.recycle_robots.map(&:id)
+      @not_passed  = Robot.recycle_robots
+      @passed      = Robot.passed
+      @ship_ready  = Robot.ship_ready
+
+      render json: { message: "Successfully created", status: :created, recycleRobots: @recycle, passed: @passed, not_passed: @not_passed, ship_ready: @ship_ready }
     else
-      render json: @shipment.errors.full_messages, status: :failed
+      render json: { message: @shipment.errors.full_messages, status: :failed }
     end
-  end
-
-  private
-
-  def shipment_params
-    params.require(:shipment).permit(:robot_ids)
   end
 end
