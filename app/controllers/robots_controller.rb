@@ -1,13 +1,13 @@
 class RobotsController < ApplicationController
+  before_action :robot, only: [:move_to_ship, :remove_to_ship, :extinguish]
+
   def index
     @robots = Robot.where(shipped: false)
-
     render json: @robots
   end
 
   def extinguish
-    @robot = Robot.find params[:id]
-    @robot.update_attribute(:status, nil) if @robot.status == 'on fire'
+    robot.update_attribute(:status, nil) if robot.status == 'on fire'
     recycle_process
   end
 
@@ -16,28 +16,29 @@ class RobotsController < ApplicationController
   end
 
   def move_to_ship
-    @robot = Robot.find params[:id]
-    if @robot.present?
-      @robot.update_attribute(:ship_ready, true)
-
+    if robot.present?
+      robot.update_attribute(:ship_ready, true)
       recycle_process
     else
-      render json: { message: @robot.errors.full_messages, status: :failed }
+      render json: { message: robot.errors.full_messages, status: :failed }
     end
   end
 
   def remove_to_ship
-    @robot = Robot.find params[:id]
-    if @robot.present?
-      @robot.update_attribute(:ship_ready, false)
+    robot = Robot.find params[:id]
+    if robot.present?
+      robot.update_attribute(:ship_ready, false)
       recycle_process
-
     else
-      render json: { message: @robot.errors.full_messages, status: :failed }
+      render json: { message: robot.errors.full_messages, status: :failed }
     end
   end
 
   private
+
+  def robot
+    Robot.find params[:id]
+  end
 
   def recycle_process
     @recycle     = Robot.recycle_robots.map(&:id)
